@@ -2,6 +2,7 @@ import { SINGNUP_REQUEST, SIGNIN_REQUEST } from '../actions/types';
 import { userActions } from '../actions';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { signUp, signIn } from '../../api/users';
+import { decode } from 'jsonwebtoken';
 
 function* signUpRequest(action) {
   try {
@@ -12,10 +13,13 @@ function* signUpRequest(action) {
   }
 }
 
-function* signInRequest() {
+function* signInRequest(action) {
   try {
     const userLogged = yield call(signIn, action.payload);
-    yield put(userActions.signInSuccess(userLogged.data));
+    const { info } = userLogged.data;
+    const user = decode(info.token);
+    if (user._id) window.localStorage.setItem('token', info.token);
+    yield put(userActions.signInSuccess(user));
   } catch (e) {
     console.log(e.message);
   }

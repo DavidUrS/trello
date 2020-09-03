@@ -1,10 +1,15 @@
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import BgDivRGBA from '../Styleds/BgDivRGBA';
+import { Field, reduxForm } from 'redux-form';
 import { Input, Container, Typography, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
-export default class Signup extends Component {
+class Signup extends Component {
   render() {
+    const { user } = this.props;
+    if (user && user._id) return <Redirect to="/workplaces" />;
+
     return (
       <Container>
         <Typography variant="h3" gutterBottom>
@@ -43,3 +48,19 @@ export default class Signup extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(
+  reduxForm({
+    form: 'signup',
+    destroyOnUnmount: false
+  })(Signup)
+);

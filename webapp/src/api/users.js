@@ -5,7 +5,7 @@ const productAPI = axios.create({
 });
 
 export const signIn = user => {
-  return productAPI.request({ method: 'post', url: '/signup', data: user });
+  return productAPI.request({ method: 'post', url: '/signin', data: user });
 };
 
 export const signUp = user => {

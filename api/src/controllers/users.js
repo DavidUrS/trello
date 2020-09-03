@@ -13,15 +13,15 @@ module.exports = {
       const { username, password } = req.body;
       const encryptedPassword = await encryptPassword(password);
       const newUser = new usersModel({ username, password: encryptedPassword });
-      await newUser.save();
-      res.json({ msg: `${newUser.username} registered` });
+      const userSaved = await newUser.save();
+      res.json({ info: userSaved, msg: 'Account saved' });
     } catch (error) {
       res.json({ msg: error.message });
     }
   },
   signIn: async (req, res) => {
     const { username, password } = req.body;
-    const userFound = await usersModel.findOne({ username });
+    let userFound = await usersModel.findOne({ username });
     if (!userFound) return res.status(403).json({ msg: 'User not registered' });
     const isCorrectPassword = await comparePassword(
       password,
@@ -30,6 +30,6 @@ module.exports = {
     if (!isCorrectPassword)
       return res.status(403).json({ msg: 'Password incorrect' });
     const token = jwt.sign(JSON.stringify(userFound), jwtSecret);
-    res.json({ message: `${userFound.username} welcome`, token });
+    res.json({ info: { token }, msg: 'Welcome' });
   }
 };

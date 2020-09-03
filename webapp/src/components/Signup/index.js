@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import { Input, Container, Typography, Button, Link } from '@material-ui/core';
+import BgDivRGBA from '../Styleds/BgDivRGBA';
+import { Input, Container, Typography, Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-const BgDivRGBA = styled.div`
-  background-color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.7);
-  with: 100%;
-`;
-
-export default class Login extends Component {
+export default class Signup extends Component {
   render() {
     return (
       <Container>
@@ -17,7 +12,10 @@ export default class Login extends Component {
         </Typography>
         <BgDivRGBA style={{ padding: '5%' }}>
           <Typography variant="h4" gutterBottom>
-            Login
+            Sign Up
+          </Typography>
+          <Typography variant="body2" gutterBottom>
+            Here you can create an account to access your workspace
           </Typography>
           <form noValidate autoComplete="off">
             <div style={{ padding: '2%' }}>
@@ -33,11 +31,11 @@ export default class Login extends Component {
             </div>
             <div>
               <Button variant="outlined" size="small">
-                Save
+                Singup
               </Button>
             </div>
             <div style={{ padding: '2%' }}>
-              <Link href="#">I don't have an account</Link>
+              <Link to="/signin">I already have an account</Link>
             </div>
           </form>
         </BgDivRGBA>

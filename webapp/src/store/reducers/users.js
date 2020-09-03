@@ -1,9 +1,9 @@
-import { SIGNIN } from '../actions/types';
+import { SIGNIN_SUCCESS } from '../actions/types';
 
-export default function (state = [], action) {
+export default function (state = {}, action) {
   switch (action.type) {
-    case SIGNIN:
-      return [...state, action.payload];
+    case SIGNIN_SUCCESS:
+      return { ...action.payload };
 
     default:
       return state;

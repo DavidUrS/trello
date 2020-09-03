@@ -11,11 +11,13 @@ const App = () => {
     <ContainerBg className="App">
       <BrowserRouter>
         <Switch>
-          <Container>
-            <Route exact path="/" render={() => <Redirect to="/signin" />} />
-            <Route path="/signin" component={Signin} />
-            <Route path="/signup" component={Signup} />
-          </Container>
+          <React.Fragment>
+            <Container>
+              <Route exact path="/" render={() => <Redirect to="/signin" />} />
+              <Route path="/signin" component={Signin} />
+              <Route path="/signup" component={Signup} />
+            </Container>
+          </React.Fragment>
         </Switch>
       </BrowserRouter>
     </ContainerBg>

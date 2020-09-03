@@ -1,17 +1,36 @@
-import { SIGNIN, SINGNUP } from './types';
+import {
+  SIGNIN_REQUEST,
+  SIGNIN_SUCCESS,
+  SINGNUP_REQUEST,
+  SINGNUP_SUCCESS
+} from './types';
 
 const actions = {};
 
-actions.signIn = user => {
+actions.signInRequest = user => {
   return {
-    type: SIGNIN,
+    type: SIGNIN_REQUEST,
     payload: user
   };
 };
 
-actions.signUp = user => {
+actions.signInSuccess = user => {
   return {
-    type: SINGNUP,
+    type: SIGNIN_SUCCESS,
+    payload: user
+  };
+};
+
+actions.signUpRequest = user => {
+  return {
+    type: SINGNUP_REQUEST,
+    payload: user
+  };
+};
+
+actions.signUpSuccess = user => {
+  return {
+    type: SINGNUP_SUCCESS,
     payload: user
   };
 };

@@ -1,4 +1,6 @@
 module.exports = {
-  SIGNIN: 'signin',
-  SINGNUP: 'singup'
+  SIGNIN_REQUEST: 'signin_request',
+  SIGNIN_SUCCESS: 'signin_success',
+  SINGNUP_REQUEST: 'singnup_request',
+  SINGNUP_SUCCESS: 'singnup_success'
 };

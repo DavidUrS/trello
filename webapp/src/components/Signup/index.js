@@ -4,8 +4,28 @@ import BgDivRGBA from '../Styleds/BgDivRGBA';
 import { Field, reduxForm } from 'redux-form';
 import { Input, Container, Typography, Button } from '@material-ui/core';
 import { Link, Redirect } from 'react-router-dom';
+import { userActions } from '../../store/actions';
 
 class Signup extends Component {
+  renderInput = ({ input, type, placeholder }) => {
+    return (
+      <div>
+        <Input
+          {...input}
+          type={type}
+          placeholder={placeholder}
+          size="small"
+          style={{ marginBottom: '2px' }}
+        />
+      </div>
+    );
+  };
+
+  onSubmit(formValues) {
+    this.props.signUpRequest(formValues);
+    return this.props.reset('signUp');
+  }
+
   render() {
     const { user } = this.props;
     if (user && user._id) return <Redirect to="/workplaces" />;
@@ -22,21 +42,30 @@ class Signup extends Component {
           <Typography variant="body2" gutterBottom>
             Here you can create an account to access your workspace
           </Typography>
-          <form noValidate autoComplete="off">
+          <form
+            noValidate
+            autoComplete="off"
+            onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
+          >
             <div style={{ padding: '2%' }}>
-              <Input id="username" label="Username" placeholder="Username" />
+              <Field
+                name="username"
+                component={this.renderInput}
+                type="text"
+                placeholder="Username"
+              />
             </div>
             <div style={{ padding: '2%' }}>
-              <Input
-                id="password"
-                label="Password"
+              <Field
+                name="password"
+                component={this.renderInput}
                 type="password"
                 placeholder="Password"
               />
             </div>
             <div>
-              <Button variant="outlined" size="small">
-                Singup
+              <Button type="submit" variant="outlined" size="small">
+                Signin
               </Button>
             </div>
             <div style={{ padding: '2%' }}>
@@ -55,12 +84,18 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispathToProps = dispatch => {
+  return {
+    signUpRequest: user => dispatch(userActions.signUpRequest(user))
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispathToProps
 )(
   reduxForm({
-    form: 'signup',
+    form: 'signUp',
     destroyOnUnmount: false
   })(Signup)
 );

@@ -1,4 +1,5 @@
 import {
+  LOGOUT,
   SIGNIN_REQUEST,
   SIGNIN_SUCCESS,
   SINGNUP_REQUEST,
@@ -62,6 +63,13 @@ actions.getUserInfoRequest = () => {
 actions.getUserInfoSuccess = user => {
   return {
     type: GET_USER_INFO_SUCCESS,
+    payload: user
+  };
+};
+
+actions.logOut = user => {
+  return {
+    type: LOGOUT,
     payload: user
   };
 };

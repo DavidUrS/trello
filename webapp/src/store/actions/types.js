@@ -1,5 +1,6 @@
 module.exports = {
   // Users
+  LOGOUT: 'logout',
   SIGNIN_REQUEST: 'signin_request',
   SIGNIN_SUCCESS: 'signin_success',
   SINGNUP_REQUEST: 'singnup_request',

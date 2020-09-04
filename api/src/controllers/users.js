@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const {
-  mongo: { usersModel }
+  mongo: { usersModel, workpacesModel }
 } = require('../../databases');
 const {
   bcryptHelpers: { encryptPassword, comparePassword }
@@ -31,5 +31,38 @@ module.exports = {
       return res.status(403).json({ msg: 'Password incorrect' });
     const token = jwt.sign(JSON.stringify(userFound), jwtSecret);
     res.json({ info: { token }, msg: 'Welcome' });
+  },
+  createWorkspace: async (req, res) => {
+    const { name } = req.body;
+    const { _id } = req.userData;
+
+    const user = await usersModel.findOne({ _id });
+    const { workspaces } = user;
+    const existentWorkspace = workspaces.find(
+      workspace => workspace.name === name
+    );
+
+    if (existentWorkspace)
+      return res.json({ msg: `You already have a workspace named ${name}` });
+
+    const newWorkspace = new workpacesModel({
+      name,
+      createdBy: _id
+    });
+    const workspace = await newWorkspace.save();
+    await usersModel.findByIdAndUpdate(
+      _id,
+      {
+        $push: { workspaces: workspace }
+      },
+      { useFindAndModify: false }
+    );
+    const updatedUser = await usersModel.findOne({ _id });
+    res.json({ info: updatedUser, msg: 'Workspace created' });
+  },
+  userInfo: async (req, res) => {
+    const { _id } = req.userData;
+    const user = await usersModel.findOne({ _id });
+    res.json({ info: user });
   }
 };

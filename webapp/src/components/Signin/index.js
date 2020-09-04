@@ -4,8 +4,7 @@ import { userActions } from '../../store/actions';
 import BgDivRGBA from '../Styleds/BgDivRGBA';
 import { Field, reduxForm } from 'redux-form';
 import { Input, Container, Typography, Button } from '@material-ui/core';
-import { Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 class Signin extends Component {
   renderInput = ({ input, type, placeholder }) => {

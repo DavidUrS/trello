@@ -14,7 +14,7 @@ class App extends Component {
   componentDidMount() {
     const token = window.localStorage.getItem('token');
     const user = decode(token);
-    if (user && user._id) this.props.signInSuccess(user);
+    if (user && user._id) this.props.getUserInfoRequest();
   }
   render() {
     const { user } = this.props;
@@ -49,13 +49,13 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    users: state.users
+    user: state.users
   };
 };
 
 const mapDispathToProps = dispatch => {
   return {
-    signInSuccess: user => dispatch(userActions.signInSuccess(user))
+    getUserInfoRequest: () => dispatch(userActions.getUserInfoRequest())
   };
 };
 

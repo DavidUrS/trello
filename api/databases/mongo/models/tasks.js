@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const schema = new Schema(
   {
-    tittle: { type: String, required: true },
+    title: { type: String, required: true },
     status: { type: String },
     description: { type: String, required: true },
     isArchived: { type: Boolean },

@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Typography,
-  Box,
-  Button,
-  Input,
-  Fab,
-  Container,
-  Dialog,
-  DialogTitle
-} from '@material-ui/core';
+import { Box, Fab, Container, Dialog } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Header from '../Header';
 import { Redirect } from 'react-router-dom';
 import { workspaceActions } from '../../store/actions';
+import CreateTaskForm from '../Forms/CreateTask';
 
 class Workspace extends Component {
   state = {
@@ -51,7 +43,7 @@ class Workspace extends Component {
           aria-labelledby="simple-dialog-title"
           open={this.state.open}
         >
-          <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
+          <CreateTaskForm />
         </Dialog>
 
         {workspace.tasks && workspace.tasks.length ? (

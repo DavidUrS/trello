@@ -28,7 +28,7 @@ class Signup extends Component {
 
   render() {
     const { user } = this.props;
-    if (user && user._id) return <Redirect to="/workplaces" />;
+    if (user && user._id) return <Redirect to="/workspaces" />;
 
     return (
       <Container>

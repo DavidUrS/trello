@@ -10,7 +10,9 @@ class Header extends Component {
         <AppBar position="static">
           <Toolbar>
             <Box p={1}>
-              <Typography variant="h6">Workspaces</Typography>
+              <Typography variant="h6">
+                {this.props.title || 'Workspaces'}
+              </Typography>
             </Box>
             <Box p={1} ml="auto">
               <Button

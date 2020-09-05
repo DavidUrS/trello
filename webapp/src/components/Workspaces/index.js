@@ -10,7 +10,7 @@ import {
   Input
 } from '@material-ui/core';
 import Header from '../Header';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Field, reduxForm } from 'redux-form';
 import { userActions } from '../../store/actions';
@@ -86,9 +86,9 @@ class Workplaces extends Component {
                     </AccordionSummary>
                     <AccordionDetails>
                       <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse malesuada lacus ex, sit amet blandit leo
-                        lobortis eget.
+                        <Link to={'workspace/' + workspace._id}>
+                          Go to workspace
+                        </Link>
                       </Typography>
                     </AccordionDetails>
                   </Accordion>

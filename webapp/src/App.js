@@ -4,7 +4,8 @@ import { decode } from 'jsonwebtoken';
 import { connect } from 'react-redux';
 import Signin from './components/Signin';
 import Signup from './components/Signup';
-import Workplaces from './components/Workplaces';
+import Workspaces from './components/Workspaces';
+import Workspace from './components/Workspace';
 import { Container } from '@material-ui/core';
 import { userActions } from './store/actions';
 import ContainerBg from './components/Styleds/ContainerBg';
@@ -29,7 +30,7 @@ class App extends Component {
                   path="/"
                   render={() =>
                     user && user._id ? (
-                      <Redirect to="/workplaces" />
+                      <Redirect to="/workspaces" />
                     ) : (
                       <Redirect to="/signin" />
                     )
@@ -37,7 +38,8 @@ class App extends Component {
                 />
                 <Route path="/signin" component={Signin} />
                 <Route path="/signup" component={Signup} />
-                <Route path="/workplaces" component={Workplaces} />
+                <Route path="/workspaces" component={Workspaces} />
+                <Route path="/workspace/:_id" component={Workspace} />
               </Container>
             </React.Fragment>
           </Switch>

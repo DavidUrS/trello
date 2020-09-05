@@ -34,7 +34,7 @@ class Workplaces extends Component {
   }
   render() {
     const { user } = this.props;
-    if (!user._id) return <Redirect to="/signin" />;
+    if (!window.localStorage.getItem('token')) return <Redirect to="/signin" />;
     return (
       <div>
         <Header />
@@ -86,7 +86,7 @@ class Workplaces extends Component {
                     </AccordionSummary>
                     <AccordionDetails>
                       <Typography>
-                        <Link to={'workspace/' + workspace._id}>
+                        <Link to={'/workspace/' + workspace._id}>
                           Go to workspace
                         </Link>
                       </Typography>

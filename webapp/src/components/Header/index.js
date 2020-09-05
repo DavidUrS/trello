@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { AppBar, Toolbar, Typography, Button, Box } from '@material-ui/core';
 import { userActions } from '../../store/actions';
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
   render() {
@@ -10,9 +11,17 @@ class Header extends Component {
         <AppBar position="static">
           <Toolbar>
             <Box p={1}>
-              <Typography variant="h6">
-                {this.props.title || 'Workspaces'}
+              <Typography variant="h5">
+                <Link
+                  to="/workspaces"
+                  style={{ color: 'white', textDecoration: 'none' }}
+                >
+                  Workspaces
+                </Link>
               </Typography>
+            </Box>
+            <Box p={1}>
+              <Typography variant="h6">{this.props.title || ''}</Typography>
             </Box>
             <Box p={1} ml="auto">
               <Button

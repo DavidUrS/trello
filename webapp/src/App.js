@@ -12,12 +12,11 @@ import ContainerBg from './components/Styleds/ContainerBg';
 import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 
 class App extends Component {
-  componentDidMount() {
-    const token = window.localStorage.getItem('token');
-    const user = decode(token);
-    if (user && user._id) this.props.getUserInfoRequest();
-  }
   render() {
+    const token = window.localStorage.getItem('token');
+    const userDecoded = decode(token);
+    if (userDecoded && userDecoded._id) this.props.getUserInfoRequest();
+
     const { user } = this.props;
     return (
       <ContainerBg className="App">
@@ -36,9 +35,9 @@ class App extends Component {
                     )
                   }
                 />
-                <Route path="/signin" component={Signin} />
+                <Route exact path="/signin" component={Signin} />
                 <Route path="/signup" component={Signup} />
-                <Route path="/workspaces" component={Workspaces} />
+                <Route exact path="/workspaces" component={Workspaces} />
                 <Route path="/workspace/:_id" component={Workspace} />
               </Container>
             </React.Fragment>

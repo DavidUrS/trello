@@ -1,9 +1,8 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { tasksActions } from '../../store/actions';
-import BgDivRGBA from '../Styleds/BgDivRGBA';
 import { Field, reduxForm } from 'redux-form';
-import { Input, Container, Typography, Button, Box } from '@material-ui/core';
+import { Input, Button, Box, TextField } from '@material-ui/core';
 
 class CreateTaskForm extends Component {
   renderInput = ({ input, type, placeholder }) => {
@@ -11,12 +10,24 @@ class CreateTaskForm extends Component {
       <div>
         <Input
           {...input}
+          style={{ width: '100%' }}
           type={type}
           placeholder={placeholder}
           size="small"
-          style={{ marginBottom: '2px' }}
         />
       </div>
+    );
+  };
+
+  renderTextArea = ({ input, placeholder }) => {
+    return (
+      <TextField
+        {...input}
+        style={{ width: '100%' }}
+        label={placeholder}
+        multiline
+        rows={20}
+      />
     );
   };
 
@@ -28,47 +39,42 @@ class CreateTaskForm extends Component {
 
   render() {
     return (
-      <Container>
-        <BgDivRGBA style={{ padding: '5%' }}>
-          <Box p={2}>
-            <Typography variant="h6" gutterBottom>
-              Create task
-            </Typography>
-            <form
-              noValidate
-              autoComplete="off"
-              onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
-            >
-              <div style={{ padding: '2%' }}>
-                <Field
-                  name="title"
-                  component={this.renderInput}
-                  type="text"
-                  placeholder="Title"
-                />
-              </div>
-              <div style={{ padding: '2%' }}>
-                <Field
-                  name="description"
-                  component={this.renderInput}
-                  type="text"
-                  placeholder="description"
-                />
-              </div>
-              <div>
-                <Button
-                  type="submit"
-                  variant="outlined"
-                  color="primary"
-                  size="small"
-                >
-                  Save
-                </Button>
-              </div>
-            </form>
-          </Box>
-        </BgDivRGBA>
-      </Container>
+      <Box
+        p={1}
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <form
+          style={{ width: '100%' }}
+          noValidate
+          autoComplete="off"
+          onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
+        >
+          <div style={{ padding: '2%' }}>
+            <Field
+              name="title"
+              component={this.renderInput}
+              type="text"
+              placeholder="Title"
+            />
+          </div>
+          <div style={{ padding: '2%' }}>
+            <Field
+              name="description"
+              component={this.renderTextArea}
+              type="text"
+              placeholder="Description task"
+            />
+          </div>
+          <div>
+            <Button type="submit" color="primary" size="small">
+              Save
+            </Button>
+          </div>
+        </form>
+      </Box>
     );
   }
 }

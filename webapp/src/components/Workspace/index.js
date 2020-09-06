@@ -38,11 +38,21 @@ class Workspace extends Component {
           </Fab>
         </Box>
         <Dialog
+          fullWidth={true}
           onClose={() => {
             this.handleCloseDialog();
           }}
           aria-labelledby="simple-dialog-title"
           open={this.state.open}
+          PaperProps={{
+            style: {
+              position: 'absolute',
+              marginTop: 0,
+              paddingTop: 0,
+              top: 0,
+              backgroundColor: '#eeeeee'
+            }
+          }}
         >
           <CreateTaskForm workspace={workspace._id} />
         </Dialog>

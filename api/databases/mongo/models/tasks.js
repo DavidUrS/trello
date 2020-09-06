@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const schema = new Schema(
   {
     title: { type: String, required: true },
-    status: { type: String, default: 'noStatus' },
+    status: { type: String, default: 'Pending' },
     description: { type: String, required: true },
     isArchived: { type: Boolean, default: false },
     createdBy: { type: Schema.Types.ObjectId, ref: 'users' },

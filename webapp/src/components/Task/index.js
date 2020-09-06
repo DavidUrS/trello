@@ -20,6 +20,7 @@ import {
 import { tasksActions } from '../../store/actions';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MDReactComponent from 'markdown-react-js';
 
 class Task extends Component {
   state = { anchorElMoreOptions: null, anchorElStatus: null };
@@ -39,6 +40,13 @@ class Task extends Component {
   }
   render() {
     const { task, user, taskStatusList } = this.props;
+    const maxText = 30;
+    let useTextDescriptionTruncated = false;
+    let taskDescriptionTructated;
+    if (task.description.length > 30) {
+      useTextDescriptionTruncated = true;
+      taskDescriptionTructated = task.description.substring(0, maxText);
+    }
     let backgroundColor = 'white';
     let color = 'black';
     switch (task.status) {
@@ -107,13 +115,14 @@ class Task extends Component {
               >
                 Delete
               </MenuItem>
-              <MenuItem onClick={() => this.handleCloseMoreOptions()}>
-                Update
-              </MenuItem>
             </Menu>
-            <Typography variant="body1" component="p">
-              {task.description}
-            </Typography>
+            <MDReactComponent
+              text={
+                useTextDescriptionTruncated
+                  ? `${taskDescriptionTructated}...`
+                  : task.description
+              }
+            />
           </CardContent>
           <Box display="flex" justifyContent="center">
             <CardActions>

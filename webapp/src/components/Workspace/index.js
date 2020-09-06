@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Box, Fab, Container, Dialog, Grid } from '@material-ui/core';
+import { Box, Fab, Container, Dialog, Grid, Snackbar } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Header from '../Header';
 import { Redirect } from 'react-router-dom';
@@ -50,11 +50,20 @@ class Workspace extends Component {
         {workspace.tasks && workspace.tasks.length ? (
           <Grid container spacing={3} justify="center" alignItems="center">
             {workspace.tasks.map(task => {
-              return <Task key={task._id} task={task} user={user} />;
+              return (
+                <Task
+                  key={task._id}
+                  task={task}
+                  user={user}
+                  taskStatusList={workspace.taskStatus}
+                />
+              );
             })}
           </Grid>
         ) : (
-          <div>No data yet</div>
+          <div>
+            <Snackbar open={true} message="You don't have any tasks yet" />
+          </div>
         )}
       </Container>
     );

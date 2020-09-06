@@ -7,27 +7,37 @@ import {
   CardContent,
   CardHeader,
   Typography,
-  Button,
   Avatar,
   IconButton,
   Menu,
   MenuItem,
-  Zoom
+  Zoom,
+  Box,
+  Tooltip,
+  Chip
 } from '@material-ui/core';
 import { tasksActions } from '../../store/actions';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 class Task extends Component {
-  state = { anchorEl: null, open: false };
+  state = { anchorElMoreOptions: null, anchorElStatus: null };
 
-  handleClick(event) {
-    this.setState({ anchorEl: event.currentTarget, open: true });
+  handleOpenStatus(event) {
+    this.setState({ anchorElStatus: event.currentTarget });
   }
-  handleClose() {
-    this.setState({ anchorEl: null, open: false });
+  handleCloseStatus() {
+    this.setState({ anchorElStatus: null });
+  }
+
+  handleOpenMoreOptions(event) {
+    this.setState({ anchorElMoreOptions: event.currentTarget });
+  }
+  handleCloseMoreOptions() {
+    this.setState({ anchorElMoreOptions: null });
   }
   render() {
-    const { task, user } = this.props;
+    const { task, user, taskStatusList } = this.props;
 
     return (
       <Grid item>
@@ -43,9 +53,9 @@ class Task extends Component {
             }
             action={
               <IconButton
-                aria-controls="simple-menu"
+                aria-controls="more-options"
                 aria-haspopup="true"
-                onClick={event => this.handleClick(event)}
+                onClick={event => this.handleOpenMoreOptions(event)}
               >
                 <MoreVertIcon />
               </IconButton>
@@ -57,11 +67,11 @@ class Task extends Component {
           />
           <CardContent>
             <Menu
-              id="simple-menu"
-              anchorEl={this.state.anchorEl}
+              id="more-options"
+              anchorEl={this.state.anchorElMoreOptions}
               keepMounted
-              open={Boolean(this.state.anchorEl)}
-              onClose={() => this.handleClose()}
+              open={Boolean(this.state.anchorElMoreOptions)}
+              onClose={() => this.handleCloseMoreOptions()}
               TransitionComponent={Zoom}
             >
               <MenuItem
@@ -70,23 +80,71 @@ class Task extends Component {
                     workspace: task.workspace,
                     _id: task._id
                   });
-                  this.handleClose();
+                  this.handleCloseMoreOptions();
                 }}
               >
                 Delete
               </MenuItem>
-              <MenuItem onClick={() => this.handleClose()}>Update</MenuItem>
+              <MenuItem onClick={() => this.handleCloseMoreOptions()}>
+                Update
+              </MenuItem>
             </Menu>
             <Typography variant="body2" component="p">
               {task.description}
               <br />
             </Typography>
           </CardContent>
-          <CardActions>
-            <Button size="small" variant="outlined" color="primary">
-              Change status
-            </Button>
-          </CardActions>
+          <Box display="flex" justifyContent="center">
+            <CardActions>
+              <Chip label={task.status} color="secondary" variant="outlined" />
+              <Tooltip
+                title="Change status"
+                aria-label="Change status"
+                placement="top"
+              >
+                <IconButton
+                  aria-label="share"
+                  aria-controls="status"
+                  aria-haspopup="true"
+                  onClick={event => this.handleOpenStatus(event)}
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
+              </Tooltip>
+
+              <Menu
+                id="status"
+                anchorEl={this.state.anchorElStatus}
+                keepMounted
+                open={Boolean(this.state.anchorElStatus)}
+                onClose={() => this.handleCloseStatus()}
+                elevation={0}
+                TransitionComponent={Zoom}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center'
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center'
+                }}
+                getContentAnchorEl={null}
+              >
+                {taskStatusList && taskStatusList.length
+                  ? taskStatusList.map(status => {
+                      return (
+                        <MenuItem
+                          key={status}
+                          onClick={() => this.handleCloseStatus()}
+                        >
+                          {status}
+                        </MenuItem>
+                      );
+                    })
+                  : null}
+              </Menu>
+            </CardActions>
+          </Box>
         </Card>
       </Grid>
     );

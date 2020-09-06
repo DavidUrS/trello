@@ -22,7 +22,7 @@ module.exports = {
     await workpacesModel.findByIdAndUpdate(
       workspace,
       {
-        $push: { tasks: task }
+        $push: { tasks: task._id }
       },
       { useFindAndModify: false }
     );
@@ -33,5 +33,18 @@ module.exports = {
     } catch (error) {
       res.json({ msg: error.message });
     }
+  },
+  deleteTask: async (req, res) => {
+    const { workspace, _id } = req.body;
+    await workpacesModel.findByIdAndUpdate(
+      workspace,
+      {
+        $pull: { tasks: _id }
+      },
+      { useFindAndModify: false }
+    );
+    await tasksModel.findByIdAndDelete(_id);
+    const updatedWorkpace = await workpacesModel.findById(workspace);
+    res.json({ info: updatedWorkpace, msg: 'Task created' });
   }
 };

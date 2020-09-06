@@ -6,7 +6,17 @@ const taskAPI = axios.create({
 
 export const create = task => {
   return taskAPI.request({
-    method: 'put',
+    method: 'post',
+    data: task,
+    headers: {
+      Authorization: `Bearer ${window.localStorage.getItem('token')}`
+    }
+  });
+};
+
+export const deleteTask = task => {
+  return taskAPI.request({
+    method: 'delete',
     data: task,
     headers: {
       Authorization: `Bearer ${window.localStorage.getItem('token')}`

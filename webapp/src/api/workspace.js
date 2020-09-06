@@ -13,3 +13,13 @@ export const getInfo = _id => {
     }
   });
 };
+
+export const deleteWorkspace = _id => {
+  return workspaceAPI.request({
+    method: 'delete',
+    url: `/${_id}`,
+    headers: {
+      Authorization: `Bearer ${window.localStorage.getItem('token')}`
+    }
+  });
+};

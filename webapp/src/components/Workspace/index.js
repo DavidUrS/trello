@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Box,
-  Fab,
-  Container,
-  Dialog,
-  Grid,
-  Card,
-  CardActions,
-  CardContent,
-  Typography,
-  Button
-} from '@material-ui/core';
+import { Box, Fab, Container, Dialog, Grid } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Header from '../Header';
 import { Redirect } from 'react-router-dom';
 import { workspaceActions } from '../../store/actions';
 import CreateTaskForm from '../Forms/CreateTask';
+import Task from '../Task';
 
 class Workspace extends Component {
   state = {
@@ -32,12 +22,12 @@ class Workspace extends Component {
     this.setState({ open: false });
   }
   render() {
-    const { workspace } = this.props;
+    const { workspace, user } = this.props;
     if (!window.localStorage.getItem('token')) return <Redirect to="/signin" />;
 
     return (
       <Container>
-        <Header title={workspace.name} />
+        <Header title={workspace.name} username={user.username} />
         <Box p={2}>
           <Fab size="small" aria-label="add">
             <AddIcon
@@ -58,26 +48,9 @@ class Workspace extends Component {
         </Dialog>
 
         {workspace.tasks && workspace.tasks.length ? (
-          <Grid container spacing={3}>
+          <Grid container spacing={3} justify="center" alignItems="center">
             {workspace.tasks.map(task => {
-              return (
-                <Grid key={task._id} item xs>
-                  <Card>
-                    <CardContent>
-                      <Typography color="textSecondary" gutterBottom>
-                        {task.title}
-                      </Typography>
-                      <Typography variant="body2" component="p">
-                        {task.title}
-                        <br />
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small">Learn More</Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              );
+              return <Task key={task._id} task={task} user={user} />;
             })}
           </Grid>
         ) : (

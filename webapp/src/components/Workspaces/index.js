@@ -7,13 +7,15 @@ import {
   Typography,
   Box,
   Button,
-  Input
+  Input,
+  IconButton
 } from '@material-ui/core';
 import Header from '../Header';
 import { Redirect, Link } from 'react-router-dom';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Field, reduxForm } from 'redux-form';
-import { userActions } from '../../store/actions';
+import { userActions, workspaceActions } from '../../store/actions';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 class Workplaces extends Component {
   renderInput = ({ input, type, placeholder }) => {
@@ -37,7 +39,7 @@ class Workplaces extends Component {
     if (!window.localStorage.getItem('token')) return <Redirect to="/signin" />;
     return (
       <div>
-        <Header />
+        <Header username={user.username} />
         <Box p={4}>
           <Accordion defaultExpanded>
             <AccordionSummary
@@ -85,11 +87,22 @@ class Workplaces extends Component {
                       <Typography>{workspace.name}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Typography>
-                        <Link to={'/workspace/' + workspace._id}>
-                          Go to workspace
-                        </Link>
-                      </Typography>
+                      <Box>
+                        <Typography>
+                          <Link to={'/workspace/' + workspace._id}>
+                            Go to workspace
+                          </Link>
+                        </Typography>
+                      </Box>
+                      <Box ml="auto">
+                        <IconButton
+                          onClick={() =>
+                            this.props.deleteWorkspaceRequest(workspace._id)
+                          }
+                        >
+                          <DeleteForeverIcon color="error" />
+                        </IconButton>
+                      </Box>
                     </AccordionDetails>
                   </Accordion>
                 );
@@ -110,7 +123,9 @@ const mapStateToProps = state => {
 const mapDispathToProps = dispatch => {
   return {
     createWorkspaceRequest: workspace =>
-      dispatch(userActions.createWorkspaceRequest(workspace))
+      dispatch(userActions.createWorkspaceRequest(workspace)),
+    deleteWorkspaceRequest: _id =>
+      dispatch(workspaceActions.deleteWorkspaceRequest(_id))
   };
 };
 

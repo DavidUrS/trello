@@ -6,6 +6,7 @@ import Header from '../Header';
 import { Redirect } from 'react-router-dom';
 import { workspaceActions } from '../../store/actions';
 import CreateTaskForm from '../Forms/CreateTask';
+import SearchTaskForm from '../Forms/SearchTask';
 import Task from '../Task';
 
 class Workspace extends Component {
@@ -37,6 +38,7 @@ class Workspace extends Component {
             />
           </Fab>
         </Box>
+        <SearchTaskForm />
         <Dialog
           fullWidth={true}
           onClose={() => {

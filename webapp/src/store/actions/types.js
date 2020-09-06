@@ -10,6 +10,8 @@ module.exports = {
   CREATE_WORKSPACE_REQUEST: 'create_workspace_request',
   CREATE_WORKSPACE_SUCCESS: 'create_workspace_success',
   // Workspace
-  GET_WORKSPACE_INFO_REQUEST: 'GET_WORKSPACE_INFO_REQUEST',
-  GET_WORKSPACE_INFO_SUCCESS: 'get_workspace_info_success'
+  GET_WORKSPACE_INFO_REQUEST: 'get_workspace_info_request',
+  GET_WORKSPACE_INFO_SUCCESS: 'get_workspace_info_success',
+  // Takss
+  CREATE_TASK_REQUEST: 'create_task_request'
 };

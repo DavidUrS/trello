@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Box, Fab, Container, Dialog } from '@material-ui/core';
+import {
+  Box,
+  Fab,
+  Container,
+  Dialog,
+  Grid,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+  Button
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Header from '../Header';
 import { Redirect } from 'react-router-dom';
@@ -21,7 +32,7 @@ class Workspace extends Component {
     this.setState({ open: false });
   }
   render() {
-    const { workspace, user } = this.props;
+    const { workspace } = this.props;
     if (!window.localStorage.getItem('token')) return <Redirect to="/signin" />;
 
     return (
@@ -43,11 +54,32 @@ class Workspace extends Component {
           aria-labelledby="simple-dialog-title"
           open={this.state.open}
         >
-          <CreateTaskForm />
+          <CreateTaskForm workspace={workspace._id} />
         </Dialog>
 
         {workspace.tasks && workspace.tasks.length ? (
-          <div>sasis</div>
+          <Grid container spacing={3}>
+            {workspace.tasks.map(task => {
+              return (
+                <Grid key={task._id} item xs>
+                  <Card>
+                    <CardContent>
+                      <Typography color="textSecondary" gutterBottom>
+                        {task.title}
+                      </Typography>
+                      <Typography variant="body2" component="p">
+                        {task.title}
+                        <br />
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small">Learn More</Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              );
+            })}
+          </Grid>
         ) : (
           <div>No data yet</div>
         )}

@@ -4,13 +4,13 @@ const { Schema } = mongoose;
 const schema = new Schema(
   {
     title: { type: String, required: true },
-    status: { type: String },
+    status: { type: String, default: 'noStatus' },
     description: { type: String, required: true },
-    isArchived: { type: Boolean },
+    isArchived: { type: Boolean, default: false },
+    createdBy: { type: Schema.Types.ObjectId, ref: 'users' },
     workspace: {
       type: Schema.Types.ObjectId,
-      ref: 'workspaces',
-      autopopulate: true
+      ref: 'workspaces'
     }
   },
   { timestamps: true }

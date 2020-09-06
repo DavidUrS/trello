@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { userActions } from '../../store/actions';
+import { tasksActions } from '../../store/actions';
 import BgDivRGBA from '../Styleds/BgDivRGBA';
 import { Field, reduxForm } from 'redux-form';
 import { Input, Container, Typography, Button, Box } from '@material-ui/core';
@@ -21,7 +21,8 @@ class CreateTaskForm extends Component {
   };
 
   onSubmit(formValues) {
-    this.props.signInRequest(formValues);
+    formValues.workspace = this.props.workspace;
+    this.props.createTaskRequest(formValues);
     return this.props.reset('createTask');
   }
 
@@ -74,7 +75,7 @@ class CreateTaskForm extends Component {
 
 const mapDispathToProps = dispatch => {
   return {
-    signInRequest: user => dispatch(userActions.signInRequest(user))
+    createTaskRequest: task => dispatch(tasksActions.createTaskRequest(task))
   };
 };
 

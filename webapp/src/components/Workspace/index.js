@@ -38,7 +38,7 @@ class Workspace extends Component {
             />
           </Fab>
         </Box>
-        <SearchTaskForm />
+        <SearchTaskForm workspace={workspace} />
         <Dialog
           fullWidth={true}
           onClose={() => {

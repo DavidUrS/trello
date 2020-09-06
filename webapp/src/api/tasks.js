@@ -34,3 +34,13 @@ export const changeStatusTask = task => {
     }
   });
 };
+
+export const searchTask = task => {
+  return taskAPI.request({
+    method: 'get',
+    url: `/search?workspace=${task.workspace}&textToSearch=${task.textToSearch}`,
+    headers: {
+      Authorization: `Bearer ${window.localStorage.getItem('token')}`
+    }
+  });
+};

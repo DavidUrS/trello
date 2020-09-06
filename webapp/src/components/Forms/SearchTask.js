@@ -6,20 +6,23 @@ import { Input, Box, InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 class SearchTaskForm extends Component {
-  onChange(e) {
-    console.log(e.target.value);
+  executeSearch(textToSearch) {
+    this.props.searchTaskRequest({
+      workspace: this.props.workspace._id,
+      textToSearch
+    });
   }
   renderInput = props => {
     return (
       <Input
         {...props}
         onChange={event => {
-          let value = event.target.value;
+          let textToSearch = event.target.value;
           if (
-            (value.length % 2 === 0 && value.length > 1) ||
-            value.length === 0
+            (textToSearch.length % 2 === 0 && textToSearch.length > 1) ||
+            textToSearch.length === 0
           ) {
-            console.log('to filter');
+            this.executeSearch(textToSearch);
           }
         }}
         startAdornment={
@@ -63,7 +66,7 @@ class SearchTaskForm extends Component {
 
 const mapDispathToProps = dispatch => {
   return {
-    createTaskRequest: task => dispatch(tasksActions.createTaskRequest(task))
+    searchTaskRequest: task => dispatch(tasksActions.searchTaskRequest(task))
   };
 };
 

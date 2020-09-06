@@ -64,5 +64,23 @@ module.exports = {
     } catch (error) {
       res.json({ msg: error.message });
     }
+  },
+  searchTask: async (req, res) => {
+    try {
+      const { workspace, textToSearch } = req.query;
+      const workspaceFound = await workpacesModel.findById(workspace);
+      let regExp = new RegExp(textToSearch, 'i');
+      const tasksFound = await tasksModel.find({
+        $or: [
+          { title: { $regex: regExp } },
+          { description: { $regex: regExp } }
+        ],
+        workspace
+      });
+      workspaceFound.tasks = tasksFound;
+      res.json({ info: workspaceFound, msg: 'OK' });
+    } catch (error) {
+      res.json({ msg: error.message });
+    }
   }
 };

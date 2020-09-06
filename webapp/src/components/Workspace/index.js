@@ -42,7 +42,7 @@ class Workspace extends Component {
           onClose={() => {
             this.handleCloseDialog();
           }}
-          aria-labelledby="simple-dialog-title"
+          aria-labelledby="create-task-dialog"
           open={this.state.open}
           PaperProps={{
             style: {

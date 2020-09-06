@@ -15,16 +15,24 @@ import {
   Box,
   Tooltip,
   Chip,
-  Divider
+  Divider,
+  Dialog
 } from '@material-ui/core';
 import { tasksActions } from '../../store/actions';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MDReactComponent from 'markdown-react-js';
+import OpenedTask from './OpenedTask';
 
 class Task extends Component {
-  state = { anchorElMoreOptions: null, anchorElStatus: null };
+  state = { anchorElMoreOptions: null, anchorElStatus: null, open: false };
 
+  handleCloseDialog() {
+    this.setState({ open: false });
+  }
+  handleOpenDialog() {
+    this.setState({ open: true });
+  }
   handleOpenStatus(event) {
     this.setState({ anchorElStatus: event.currentTarget });
   }
@@ -70,30 +78,52 @@ class Task extends Component {
     }
     return (
       <Grid item>
+        <Dialog
+          fullWidth={true}
+          onClose={() => {
+            this.handleCloseDialog();
+          }}
+          aria-labelledby="open-task-dialog"
+          open={this.state.open}
+          PaperProps={{
+            style: {
+              position: 'absolute',
+              marginTop: 0,
+              paddingTop: 0,
+              top: 0,
+              backgroundColor: '#eeeeee'
+            }
+          }}
+        >
+          <OpenedTask key={task._id} task={task} user={user} />
+        </Dialog>
         <Card variant="outlined">
-          <CardHeader
-            avatar={
-              <Avatar
-                aria-label="recipe"
-                style={{ backgroundColor: '#f44336' }}
-              >
-                {user.username ? user.username.charAt(0).toUpperCase() : ''}
-              </Avatar>
-            }
-            action={
-              <IconButton
-                aria-controls="more-options"
-                aria-haspopup="true"
-                onClick={event => this.handleOpenMoreOptions(event)}
-              >
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title={task.title}
-            subheader={`Created at ${new Date(
-              task.createdAt
-            ).toLocaleDateString()}`}
-          />
+          <div>
+            <CardHeader
+              avatar={
+                <Avatar
+                  aria-label="recipe"
+                  style={{ backgroundColor: '#f44336' }}
+                >
+                  {user.username ? user.username.charAt(0).toUpperCase() : ''}
+                </Avatar>
+              }
+              action={
+                <IconButton
+                  aria-controls="more-options"
+                  aria-haspopup="true"
+                  onClick={event => this.handleOpenMoreOptions(event)}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+              }
+              title={task.title}
+              subheader={`Created at ${new Date(
+                task.createdAt
+              ).toLocaleDateString()}`}
+            />
+          </div>
+
           <Divider variant="middle" />
           <CardContent>
             <Menu
@@ -126,7 +156,20 @@ class Task extends Component {
           </CardContent>
           <Box display="flex" justifyContent="center">
             <CardActions>
-              <Chip label={task.status} style={{ backgroundColor, color }} />
+              <Chip
+                size="small"
+                label={task.status}
+                style={{ backgroundColor, color }}
+              />
+              <Chip
+                label="Open"
+                color="primary"
+                variant="outlined"
+                size="small"
+                onClick={() => {
+                  this.handleOpenDialog();
+                }}
+              />
               <Tooltip
                 title="Change status"
                 aria-label="Change status"

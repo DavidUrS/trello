@@ -35,16 +35,34 @@ module.exports = {
     }
   },
   deleteTask: async (req, res) => {
-    const { workspace, _id } = req.body;
-    await workpacesModel.findByIdAndUpdate(
-      workspace,
-      {
-        $pull: { tasks: _id }
-      },
-      { useFindAndModify: false }
-    );
-    await tasksModel.findByIdAndDelete(_id);
-    const updatedWorkpace = await workpacesModel.findById(workspace);
-    res.json({ info: updatedWorkpace, msg: 'Task created' });
+    try {
+      const { workspace, _id } = req.body;
+      await workpacesModel.findByIdAndUpdate(
+        workspace,
+        {
+          $pull: { tasks: _id }
+        },
+        { useFindAndModify: false }
+      );
+      await tasksModel.findByIdAndDelete(_id);
+      const updatedWorkpace = await workpacesModel.findById(workspace);
+      res.json({ info: updatedWorkpace, msg: 'Task created' });
+    } catch (error) {
+      res.json({ msg: error.message });
+    }
+  },
+  changeStatus: async (req, res) => {
+    try {
+      const { _id } = req.params;
+      const { status } = req.body;
+      await tasksModel.findByIdAndUpdate(
+        _id,
+        { status },
+        { useFindAndModify: false }
+      );
+      res.json({ msg: 'OK' });
+    } catch (error) {
+      res.json({ msg: error.message });
+    }
   }
 };

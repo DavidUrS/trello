@@ -23,3 +23,14 @@ export const deleteTask = task => {
     }
   });
 };
+
+export const changeStatusTask = task => {
+  return taskAPI.request({
+    method: 'put',
+    url: `/changeStatus/${task._id}`,
+    data: { status: task.status },
+    headers: {
+      Authorization: `Bearer ${window.localStorage.getItem('token')}`
+    }
+  });
+};

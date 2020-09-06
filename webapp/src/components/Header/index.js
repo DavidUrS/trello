@@ -23,7 +23,7 @@ class Header extends Component {
                 aria-label="recipe"
                 style={{ backgroundColor: '#f44336' }}
               >
-                {username ? username.charAt(0) : ''}
+                {username ? username.charAt(0).toUpperCase() : ''}
               </Avatar>
             </Box>
             <Box p={1}>

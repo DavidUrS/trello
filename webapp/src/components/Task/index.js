@@ -14,7 +14,8 @@ import {
   Zoom,
   Box,
   Tooltip,
-  Chip
+  Chip,
+  Divider
 } from '@material-ui/core';
 import { tasksActions } from '../../store/actions';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -38,7 +39,27 @@ class Task extends Component {
   }
   render() {
     const { task, user, taskStatusList } = this.props;
+    let backgroundColor = 'white';
+    let color = 'black';
+    switch (task.status) {
+      case 'Pending':
+        backgroundColor = '#b26a00';
+        color = 'white';
+        break;
 
+      case 'Done':
+        backgroundColor = '#357a38';
+        color = 'white';
+        break;
+
+      case 'In progress':
+        backgroundColor = '#008394';
+        color = 'white';
+        break;
+
+      default:
+        break;
+    }
     return (
       <Grid item>
         <Card variant="outlined">
@@ -48,7 +69,7 @@ class Task extends Component {
                 aria-label="recipe"
                 style={{ backgroundColor: '#f44336' }}
               >
-                {user.username ? user.username.charAt(0) : ''}
+                {user.username ? user.username.charAt(0).toUpperCase() : ''}
               </Avatar>
             }
             action={
@@ -65,6 +86,7 @@ class Task extends Component {
               task.createdAt
             ).toLocaleDateString()}`}
           />
+          <Divider variant="middle" />
           <CardContent>
             <Menu
               id="more-options"
@@ -89,14 +111,13 @@ class Task extends Component {
                 Update
               </MenuItem>
             </Menu>
-            <Typography variant="body2" component="p">
+            <Typography variant="body1" component="p">
               {task.description}
-              <br />
             </Typography>
           </CardContent>
           <Box display="flex" justifyContent="center">
             <CardActions>
-              <Chip label={task.status} color="secondary" variant="outlined" />
+              <Chip label={task.status} style={{ backgroundColor, color }} />
               <Tooltip
                 title="Change status"
                 aria-label="Change status"
@@ -135,7 +156,14 @@ class Task extends Component {
                       return (
                         <MenuItem
                           key={status}
-                          onClick={() => this.handleCloseStatus()}
+                          onClick={() => {
+                            this.props.changeStatusRequest({
+                              workspace: task.workspace,
+                              status,
+                              _id: task._id
+                            });
+                            this.handleCloseStatus();
+                          }}
                         >
                           {status}
                         </MenuItem>
@@ -145,6 +173,10 @@ class Task extends Component {
               </Menu>
             </CardActions>
           </Box>
+          <Divider variant="middle" />
+          <Typography variant="caption" component="p" style={{ color: 'gray' }}>
+            {`Last updated ${new Date(task.updatedAt).toLocaleDateString()}`}
+          </Typography>
         </Card>
       </Grid>
     );
@@ -153,7 +185,8 @@ class Task extends Component {
 
 const mapDispathToProps = dispatch => {
   return {
-    deleteTaskRequest: task => dispatch(tasksActions.deleteTaskRequest(task))
+    deleteTaskRequest: task => dispatch(tasksActions.deleteTaskRequest(task)),
+    changeStatusRequest: task => dispatch(tasksActions.chageStatusRequest(task))
   };
 };
 

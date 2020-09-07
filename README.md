@@ -2,7 +2,7 @@
 
 ![Login](https://raw.githubusercontent.com/DavidUrS/trello/master/login.png)
 
-This [project](duribe-challenge.s3-website-sa-east-1.amazonaws.com) is done in MERN stack (Mongo, Express, React and Node), can help us to manage our tasks in different work spaces, like our home, or in the office, this means, that several work spaces can be created and each space has its own tasks, these tasks currently have 3 states `Pending` `In Progress` and `Done`.
+This [app](http://duribe-challenge.s3-website-sa-east-1.amazonaws.com) is done in MERN stack (Mongo, Express, React and Node), can help us to manage our tasks in different work spaces, like our home, or in the office, this means, that several work spaces can be created and each space has its own tasks, these tasks currently have 3 states `Pending` `In Progress` and `Done`.
 
 ![Tasks](https://raw.githubusercontent.com/DavidUrS/trello/master/workSpaces.png)
 
@@ -26,3 +26,8 @@ Currently this project is running on an **EC2 instance of AWS**, for the project
 ### Frontend
 
 Currently the `build` of our project is displayed in a **S3 Bucket of AWS**, to generate this build, we also need a file called `.env`, this file must be located in the `webapp` folder and must contain the following variable `REACT_APP_API_URL`, which will contain the URL where you are listening to our `API`.
+
+
+## Infrastructure
+
+![Architecture](https://raw.githubusercontent.com/DavidUrS/trello/master/infrastructure.png)

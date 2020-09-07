@@ -23,6 +23,6 @@ For the **Frontend**, we used **ReactJs**, and we used some complementary techno
 
 Currently this project is running on an **EC2 instance of AWS**, for the project to run, you need to create a file inside the `api` folder, this file must be called `.env` and will contain sensitive information, this file must have the following environment variables `JWT_SECRET`, `SALT_ROUDS`, `PORT` and `MONGO_URI`, the file to be executed with node is the `index.js`
 
-### Fronend
+### Frontend
 
 Currently the `build` of our project is displayed in a **S3 Bucket of AWS**, to generate this build, we also need a file called `.env`, this file must be located in the `webapp` folder and must contain the following variable `REACT_APP_API_URL`, which will contain the URL where you are listening to our `API`.

@@ -5,9 +5,12 @@ import { Field, reduxForm } from 'redux-form';
 import { Input, Container, Typography, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { userActions } from '../../store/actions';
+import { Alert } from '@material-ui/lab';
+
+const required = value => (value ? undefined : 'Required');
 
 class SignupForm extends Component {
-  renderInput = ({ input, type, placeholder }) => {
+  renderInput = ({ input, type, placeholder, meta: { error } }) => {
     return (
       <div>
         <Input
@@ -17,6 +20,15 @@ class SignupForm extends Component {
           size="small"
           style={{ marginBottom: '2px' }}
         />
+        {error ? (
+          <Alert
+            style={{ width: '15%', margin: 'auto' }}
+            severity="warning"
+            color="warning"
+          >
+            {error}
+          </Alert>
+        ) : null}
       </div>
     );
   };
@@ -47,6 +59,7 @@ class SignupForm extends Component {
                 component={this.renderInput}
                 type="text"
                 placeholder="Username"
+                validate={[required]}
               />
             </div>
             <div style={{ padding: '2%' }}>
@@ -55,6 +68,7 @@ class SignupForm extends Component {
                 component={this.renderInput}
                 type="password"
                 placeholder="Password"
+                validate={[required]}
               />
             </div>
             <div>

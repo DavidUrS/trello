@@ -2,39 +2,69 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { tasksActions } from '../../store/actions';
 import { Field, reduxForm } from 'redux-form';
-import { Input, Button, Box, TextField } from '@material-ui/core';
+import { Input, Button, Box, TextField, Hidden } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 
+const required = value => (value ? undefined : 'Required');
 class CreateTaskForm extends Component {
-  renderInput = ({ input, type, placeholder }) => {
-    return (
-      <div>
-        <Input
-          {...input}
-          style={{ width: '100%' }}
-          type={type}
-          placeholder={placeholder}
-          size="small"
-        />
-      </div>
-    );
+  renderInput = ({ input, type, placeholder, hidden, meta: { error } }) => {
+    if (hidden) {
+      return (
+        <Hidden>
+          <Input
+            {...input}
+            style={{ width: '100%' }}
+            type="hidden"
+            placeholder={placeholder}
+            size="small"
+          />
+        </Hidden>
+      );
+    } else {
+      return (
+        <div>
+          <Input
+            {...input}
+            style={{ width: '100%' }}
+            type={type}
+            placeholder={placeholder}
+            size="small"
+            required={true}
+          />
+          {error ? (
+            <Alert severity="warning" color="warning">
+              {error}
+            </Alert>
+          ) : null}
+        </div>
+      );
+    }
   };
 
-  renderTextArea = ({ input, placeholder }) => {
+  renderTextArea = ({ input, placeholder, meta: { error } }) => {
     return (
-      <TextField
-        {...input}
-        style={{ width: '100%' }}
-        label={placeholder}
-        multiline
-        rows={20}
-      />
+      <Box p={2}>
+        <TextField
+          {...input}
+          style={{ width: '100%' }}
+          label={placeholder}
+          multiline
+          rows={20}
+        />
+        {error ? (
+          <Alert severity="warning" color="warning">
+            {error}
+          </Alert>
+        ) : null}
+      </Box>
     );
   };
 
   onSubmit(formValues) {
     formValues.workspace = this.props.workspace;
     this.props.createTaskRequest(formValues);
-    return this.props.reset('createTask');
+    this.props.reset('createTask');
+    this.props.closeForm();
   }
 
   render() {
@@ -52,12 +82,14 @@ class CreateTaskForm extends Component {
           autoComplete="off"
           onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
         >
+          <Field name="_id" component={this.renderInput} hidden={true} />
           <div style={{ padding: '2%' }}>
             <Field
               name="title"
               component={this.renderInput}
               type="text"
               placeholder="Title"
+              validate={[required]}
             />
           </div>
           <div style={{ padding: '2%' }}>
@@ -66,6 +98,7 @@ class CreateTaskForm extends Component {
               component={this.renderTextArea}
               type="text"
               placeholder="Description task"
+              validate={[required]}
             />
           </div>
           <div>
@@ -79,6 +112,13 @@ class CreateTaskForm extends Component {
   }
 }
 
+const mapStateToProps = (state, props) => {
+  let initValues = props && props.initValues ? props.initValues : {};
+  return {
+    initialValues: initValues
+  };
+};
+
 const mapDispathToProps = dispatch => {
   return {
     createTaskRequest: task => dispatch(tasksActions.createTaskRequest(task))
@@ -86,11 +126,10 @@ const mapDispathToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispathToProps
 )(
   reduxForm({
-    form: 'createTask',
-    destroyOnUnmount: false
+    form: 'createTask'
   })(CreateTaskForm)
 );

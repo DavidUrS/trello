@@ -4,32 +4,39 @@ const {
 
 module.exports = {
   createTask: async (req, res) => {
-    const { workspace, title, description } = req.body;
-    const workspaceFound = await workpacesModel.findById(workspace);
-    const { tasks } = workspaceFound;
-    const existentTask = tasks.find(task => task.title === title);
-
-    if (existentTask)
-      return res.json({ msg: `You already have a task named ${title}` });
-
-    const newTask = new tasksModel({
-      workspace,
-      title,
-      description,
-      createdBy: req.userData._id
-    });
-    const task = await newTask.save();
-    await workpacesModel.findByIdAndUpdate(
-      workspace,
-      {
-        $push: { tasks: task._id }
-      },
-      { useFindAndModify: false }
-    );
-    const updatedWorkpace = await workpacesModel.findById(workspace);
-    res.json({ info: updatedWorkpace, msg: 'Task created' });
-
     try {
+      const { workspace, title, description, _id } = req.body;
+      const workspaceFound = await workpacesModel.findById(workspace);
+      const { tasks } = workspaceFound;
+      const existentTask = tasks.find(task => task.title === title);
+
+      if (existentTask && !_id)
+        return res.json({ msg: `You already have a task named ${title}` });
+
+      if (!_id) {
+        const newTask = new tasksModel({
+          workspace,
+          title,
+          description,
+          createdBy: req.userData._id
+        });
+        const task = await newTask.save();
+        await workpacesModel.findByIdAndUpdate(
+          workspace,
+          {
+            $push: { tasks: task._id }
+          },
+          { useFindAndModify: false }
+        );
+      } else {
+        await tasksModel.findByIdAndUpdate(
+          _id,
+          { title, description },
+          { useFindAndModify: false }
+        );
+      }
+      const updatedWorkpace = await workpacesModel.findById(workspace);
+      return res.json({ info: updatedWorkpace, msg: 'Task created' });
     } catch (error) {
       res.json({ msg: error.message });
     }

@@ -39,7 +39,6 @@ class Task extends Component {
   handleCloseStatus() {
     this.setState({ anchorElStatus: null });
   }
-
   handleOpenMoreOptions(event) {
     this.setState({ anchorElMoreOptions: event.currentTarget });
   }
@@ -144,6 +143,18 @@ class Task extends Component {
                 }}
               >
                 Delete
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  this.props.editTask({
+                    _id: task._id,
+                    title: task.title,
+                    description: task.description
+                  });
+                  this.handleCloseMoreOptions();
+                }}
+              >
+                Edit
               </MenuItem>
             </Menu>
             <MDReactComponent

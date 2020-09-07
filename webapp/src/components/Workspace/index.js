@@ -11,13 +11,28 @@ import Task from '../Task';
 
 class Workspace extends Component {
   state = {
-    open: false
+    open: false,
+    initialValues: {
+      _id: '',
+      title: '',
+      description: ''
+    }
   };
+  editTask(task) {
+    this.setState({
+      open: true,
+      initialValues: {
+        title: task.title,
+        description: task.description,
+        _id: task._id
+      }
+    });
+  }
   componentWillMount() {
     this.props.getInfoRequest(this.props.match.params._id);
   }
   handleOpenDialog() {
-    this.setState({ open: true });
+    this.setState({ open: true, initialValues: {} });
   }
   handleCloseDialog() {
     this.setState({ open: false });
@@ -56,7 +71,11 @@ class Workspace extends Component {
             }
           }}
         >
-          <CreateTaskForm workspace={workspace._id} />
+          <CreateTaskForm
+            workspace={workspace._id}
+            initValues={this.state.initialValues}
+            closeForm={() => this.handleCloseDialog()}
+          />
         </Dialog>
 
         {workspace.tasks && workspace.tasks.length ? (
@@ -68,6 +87,7 @@ class Workspace extends Component {
                   task={task}
                   user={user}
                   taskStatusList={workspace.taskStatus}
+                  editTask={() => this.editTask(task)}
                 />
               );
             })}

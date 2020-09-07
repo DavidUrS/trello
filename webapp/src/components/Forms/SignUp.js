@@ -59,7 +59,7 @@ class SignupForm extends Component {
             </div>
             <div>
               <Button type="submit" variant="outlined" size="small">
-                Signin
+                Sign Up
               </Button>
             </div>
             <div style={{ padding: '2%' }}>

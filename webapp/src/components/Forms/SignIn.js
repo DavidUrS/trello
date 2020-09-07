@@ -59,7 +59,7 @@ class SigninForm extends Component {
             </div>
             <div>
               <Button type="submit" variant="outlined" size="small">
-                Signin
+                Sign In
               </Button>
             </div>
             <div style={{ padding: '2%' }}>

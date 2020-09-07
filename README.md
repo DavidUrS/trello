@@ -26,3 +26,8 @@ Currently this project is running on an **EC2 instance of AWS**, for the project
 ### Frontend
 
 Currently the `build` of our project is displayed in a **S3 Bucket of AWS**, to generate this build, we also need a file called `.env`, this file must be located in the `webapp` folder and must contain the following variable `REACT_APP_API_URL`, which will contain the URL where you are listening to our `API`.
+
+
+## Infrastructure
+
+![Architecture](https://raw.githubusercontent.com/DavidUrS/trello/master/infrastructure.png)

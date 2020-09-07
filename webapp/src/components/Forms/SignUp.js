@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import BgDivRGBA from '../Styleds/BgDivRGBA';
 import { Field, reduxForm } from 'redux-form';
 import { Input, Container, Typography, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { userActions } from '../../store/actions';
 import { Alert } from '@material-ui/lab';
 
 const required = value => (value ? undefined : 'Required');
 
 class SignupForm extends Component {
+  state = { redirect: false };
   renderInput = ({ input, type, placeholder, meta: { error } }) => {
     return (
       <div>
@@ -35,10 +36,12 @@ class SignupForm extends Component {
 
   onSubmit(formValues) {
     this.props.signUpRequest(formValues);
-    return this.props.reset('signUp');
+    this.props.reset('signUp');
+    this.setState({ redirect: true });
   }
 
   render() {
+    if (this.state.redirect) return <Redirect to="/signin" />;
     return (
       <Container>
         <BgDivRGBA style={{ padding: '5%' }}>

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Typography,
-  Avatar,
   Box,
-  Container,
   Chip,
-  Divider
+  Avatar,
+  Divider,
+  Container,
+  Typography
 } from '@material-ui/core';
 import {
   Timeline,

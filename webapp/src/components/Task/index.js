@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
+  Box,
   Grid,
   Card,
-  CardActions,
-  CardContent,
+  Menu,
+  Zoom,
+  Chip,
+  Dialog,
+  Avatar,
+  Tooltip,
+  Divider,
+  MenuItem,
+  IconButton,
   CardHeader,
   Typography,
-  Avatar,
-  IconButton,
-  Menu,
-  MenuItem,
-  Zoom,
-  Box,
-  Tooltip,
-  Chip,
-  Divider,
-  Dialog
+  CardContent,
+  CardActions
 } from '@material-ui/core';
 import { tasksActions } from '../../store/actions';
 import MoreVertIcon from '@material-ui/icons/MoreVert';

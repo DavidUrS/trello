@@ -12,6 +12,8 @@ module.exports = {
     try {
       const { username, password } = req.body;
       const encryptedPassword = await encryptPassword(password);
+      const userFound = await usersModel.findOne({ username });
+      if (userFound) return res.json({ msg: 'Account already exist' });
       const newUser = new usersModel({ username, password: encryptedPassword });
       const userSaved = await newUser.save();
       res.json({ info: userSaved, msg: 'Account saved' });

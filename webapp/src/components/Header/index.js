@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
+  Box,
+  Button,
+  Avatar,
   AppBar,
   Toolbar,
-  Typography,
-  Button,
-  Box,
-  Avatar
+  Typography
 } from '@material-ui/core';
 import { userActions } from '../../store/actions';
 import { Link } from 'react-router-dom';

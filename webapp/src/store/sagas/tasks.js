@@ -1,8 +1,8 @@
 import {
   CREATE_TASK_REQUEST,
   DELETE_TASK_REQUEST,
-  CHANGE_STATUS_REQUEST,
-  SEARCH_TASKS_REQUEST
+  SEARCH_TASKS_REQUEST,
+  CHANGE_STATUS_REQUEST
 } from '../actions/types';
 import { workspaceActions } from '../actions';
 import { call, put, takeEvery } from 'redux-saga/effects';

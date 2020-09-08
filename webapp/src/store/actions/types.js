@@ -13,6 +13,7 @@ module.exports = {
   GET_WORKSPACE_INFO_REQUEST: 'get_workspace_info_request',
   GET_WORKSPACE_INFO_SUCCESS: 'get_workspace_info_success',
   DELETE_WORKSPACE_REQUEST: 'delete_workspace_request',
+  DELETE_WORKSPACE_SUCCESS: 'delete_workspace_success',
   // Taks
   CREATE_TASK_REQUEST: 'create_task_request',
   DELETE_TASK_REQUEST: 'delete_task_request',

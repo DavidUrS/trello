@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Box, Fab, Container, Dialog, Grid, Snackbar } from '@material-ui/core';
+import {
+  Box,
+  Fab,
+  Grid,
+  Dialog,
+  Backdrop,
+  Snackbar,
+  Container,
+  CircularProgress
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Header from '../Header';
 import { Redirect } from 'react-router-dom';
@@ -44,6 +53,15 @@ class Workspace extends Component {
     return (
       <Container>
         <Header title={workspace.name} username={user.username} />
+        <Backdrop
+          style={{
+            zIndex: 1,
+            color: '#fff'
+          }}
+          open={workspace.pending || false}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <Box p={2}>
           <Fab size="small" aria-label="add">
             <AddIcon

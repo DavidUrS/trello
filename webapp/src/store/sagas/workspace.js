@@ -1,6 +1,6 @@
 import {
-  GET_WORKSPACE_INFO_REQUEST,
-  DELETE_WORKSPACE_REQUEST
+  DELETE_WORKSPACE_REQUEST,
+  GET_WORKSPACE_INFO_REQUEST
 } from '../actions/types';
 import { workspaceActions, userActions } from '../actions';
 import { call, put, takeEvery } from 'redux-saga/effects';

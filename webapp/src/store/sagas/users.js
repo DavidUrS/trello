@@ -1,11 +1,11 @@
 import {
-  SINGNUP_REQUEST,
   SIGNIN_REQUEST,
+  SINGNUP_REQUEST,
   GET_USER_INFO_REQUEST,
   CREATE_WORKSPACE_REQUEST
 } from '../actions/types';
 import { userActions } from '../actions';
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery, delay } from 'redux-saga/effects';
 import { signUp, signIn, createWorkspace, getUserInfo } from '../../api/users';
 import { decode } from 'jsonwebtoken';
 
@@ -13,6 +13,8 @@ function* signUpRequest(action) {
   try {
     const userCreated = yield call(signUp, action.payload);
     yield put(userActions.signUpSuccess(userCreated.data));
+    yield delay(5000);
+    yield put(userActions.signUpSuccess({}));
   } catch (e) {
     console.log(e.message);
   }

@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
   Box,
-  Button,
   Input,
-  IconButton
+  Button,
+  Backdrop,
+  Accordion,
+  Typography,
+  IconButton,
+  CircularProgress,
+  AccordionSummary,
+  AccordionDetails
 } from '@material-ui/core';
 import Header from '../Header';
 import { Redirect, Link } from 'react-router-dom';
@@ -40,6 +42,15 @@ class Workplaces extends Component {
     return (
       <div>
         <Header username={user.username} />
+        <Backdrop
+          style={{
+            zIndex: 1,
+            color: '#fff'
+          }}
+          open={user.pending || false}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <Box p={4}>
           <Accordion defaultExpanded>
             <AccordionSummary

@@ -3,7 +3,14 @@ import React, { Component } from 'react';
 import { userActions } from '../../store/actions';
 import BgDivRGBA from '../Styleds/BgDivRGBA';
 import { Field, reduxForm } from 'redux-form';
-import { Input, Container, Typography, Button } from '@material-ui/core';
+import {
+  Input,
+  Button,
+  Backdrop,
+  Container,
+  Typography,
+  CircularProgress
+} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Alert } from '@material-ui/lab';
 
@@ -39,8 +46,19 @@ class SigninForm extends Component {
   }
 
   render() {
+    const { user } = this.props;
+
     return (
       <Container>
+        <Backdrop
+          style={{
+            zIndex: 1,
+            color: '#fff'
+          }}
+          open={user.pending || false}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <BgDivRGBA style={{ padding: '5%' }}>
           <Typography variant="h4" gutterBottom>
             Sign In
@@ -86,6 +104,12 @@ class SigninForm extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
 const mapDispathToProps = dispatch => {
   return {
     signInRequest: user => dispatch(userActions.signInRequest(user))
@@ -93,7 +117,7 @@ const mapDispathToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispathToProps
 )(
   reduxForm({

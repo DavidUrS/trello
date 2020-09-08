@@ -5,7 +5,7 @@ import {
   CREATE_WORKSPACE_REQUEST
 } from '../actions/types';
 import { userActions } from '../actions';
-import { call, put, takeEvery, delay } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import { signUp, signIn, createWorkspace, getUserInfo } from '../../api/users';
 import { decode } from 'jsonwebtoken';
 

@@ -6,13 +6,6 @@ module.exports = {
   createTask: async (req, res) => {
     try {
       const { workspace, title, description, _id } = req.body;
-      const workspaceFound = await workpacesModel.findById(workspace);
-      const { tasks } = workspaceFound;
-      const existentTask = tasks.find(task => task.title === title);
-
-      if (existentTask && !_id)
-        return res.json({ msg: `You already have a task named ${title}` });
-
       if (!_id) {
         const newTask = new tasksModel({
           workspace,
@@ -86,6 +79,22 @@ module.exports = {
       });
       workspaceFound.tasks = tasksFound;
       res.json({ info: workspaceFound, msg: 'OK' });
+    } catch (error) {
+      res.json({ msg: error.message });
+    }
+  },
+  archiveTask: async (req, res) => {
+    try {
+      const { workspace, isArchived, _id } = req.body;
+      await tasksModel.findByIdAndUpdate(
+        _id,
+        {
+          isArchived: !isArchived
+        },
+        { useFindAndModify: false }
+      );
+      const updatedWorkpace = await workpacesModel.findById(workspace);
+      res.json({ info: updatedWorkpace, msg: 'Task created' });
     } catch (error) {
       res.json({ msg: error.message });
     }

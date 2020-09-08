@@ -24,13 +24,12 @@ module.exports = {
   signIn: async (req, res) => {
     const { username, password } = req.body;
     let userFound = await usersModel.findOne({ username });
-    if (!userFound) return res.status(403).json({ msg: 'User not registered' });
+    if (!userFound) return res.json({ msg: 'User not registered' });
     const isCorrectPassword = await comparePassword(
       password,
       userFound.password
     );
-    if (!isCorrectPassword)
-      return res.status(403).json({ msg: 'Password incorrect' });
+    if (!isCorrectPassword) return res.json({ msg: 'Password incorrect' });
     const token = jwt.sign(JSON.stringify(userFound), jwtSecret);
     res.json({ info: { token }, msg: 'Welcome' });
   },

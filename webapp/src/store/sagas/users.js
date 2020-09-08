@@ -13,8 +13,6 @@ function* signUpRequest(action) {
   try {
     const userCreated = yield call(signUp, action.payload);
     yield put(userActions.signUpSuccess(userCreated.data));
-    yield delay(5000);
-    yield put(userActions.signUpSuccess({}));
   } catch (e) {
     console.log(e.message);
   }
@@ -23,10 +21,14 @@ function* signUpRequest(action) {
 function* signInRequest(action) {
   try {
     const userLogged = yield call(signIn, action.payload);
-    const { info } = userLogged.data;
-    const user = decode(info.token);
-    if (user._id) window.localStorage.setItem('token', info.token);
-    yield put(userActions.signInSuccess(user));
+    const { info, msg } = userLogged.data;
+    if (info) {
+      const user = decode(info.token);
+      if (user._id) window.localStorage.setItem('token', info.token);
+      yield put(userActions.signInSuccess(user));
+    } else {
+      yield put(userActions.signInSuccess({ msg }));
+    }
   } catch (e) {
     console.log(e.message);
   }

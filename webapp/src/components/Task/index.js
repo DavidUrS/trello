@@ -156,6 +156,18 @@ class Task extends Component {
               >
                 Edit
               </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  this.props.archiveTask({
+                    _id: task._id,
+                    workspace: task.workspace,
+                    isArchived: task.isArchived
+                  });
+                  this.handleCloseMoreOptions();
+                }}
+              >
+                {task.isArchived ? 'Unarchive' : 'Archive'}
+              </MenuItem>
             </Menu>
             <MDReactComponent
               text={
@@ -249,7 +261,9 @@ class Task extends Component {
 const mapDispathToProps = dispatch => {
   return {
     deleteTaskRequest: task => dispatch(tasksActions.deleteTaskRequest(task)),
-    changeStatusRequest: task => dispatch(tasksActions.chageStatusRequest(task))
+    changeStatusRequest: task =>
+      dispatch(tasksActions.chageStatusRequest(task)),
+    archiveTask: task => dispatch(tasksActions.archiveTask(task))
   };
 };
 

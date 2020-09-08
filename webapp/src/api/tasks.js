@@ -44,3 +44,14 @@ export const searchTask = task => {
     }
   });
 };
+
+export const archiveTask = task => {
+  return taskAPI.request({
+    method: 'put',
+    url: '/archive',
+    data: task,
+    headers: {
+      Authorization: `Bearer ${window.localStorage.getItem('token')}`
+    }
+  });
+};

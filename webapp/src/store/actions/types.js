@@ -17,6 +17,7 @@ module.exports = {
   // Taks
   CREATE_TASK_REQUEST: 'create_task_request',
   DELETE_TASK_REQUEST: 'delete_task_request',
+  ARCHIVE_TASK_REQUEST: 'archive_task_request',
   CHANGE_STATUS_REQUEST: 'change_status_request',
   SEARCH_TASKS_REQUEST: 'search_tasks_request'
 };

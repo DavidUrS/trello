@@ -15,15 +15,12 @@ const ContainerBg = styled.div`
   left: 0px;
   right: 0px;
   margin: 0px;
-  bottom: 0px;
-  height: 100vh;
+  min-height: 100vh;
   position: absolute;
   display: flex;
   justifycontent: center;
   alignitems: center;
   background-size: cover;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
   background-position: center center;
   background-image: url(${selectedPicture});
 `;

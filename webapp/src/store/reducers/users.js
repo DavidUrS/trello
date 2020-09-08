@@ -19,7 +19,8 @@ export default function (state = {}, action) {
     case CREATE_WORKSPACE_REQUEST:
       return { ...state, pending: true };
     case SINGNUP_REQUEST:
-      return { ...state, pending: true };
+      delete state.msg;
+      return { state, pending: true };
     case SINGNUP_SUCCESS:
       return { ...action.payload, pending: false };
     case GET_USER_INFO_REQUEST:
@@ -29,7 +30,8 @@ export default function (state = {}, action) {
     case SIGNIN_SUCCESS:
       return { ...action.payload, pending: false };
     case SIGNIN_REQUEST:
-      return { ...state, pending: true };
+      delete state.msg;
+      return { state, pending: true };
     case DELETE_WORKSPACE_REQUEST:
       return { ...state, pending: true };
     default:

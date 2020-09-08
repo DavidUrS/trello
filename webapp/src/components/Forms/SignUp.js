@@ -59,7 +59,7 @@ class SignupForm extends Component {
         >
           <CircularProgress color="inherit" />
         </Backdrop>
-        {user.msg ? <Message msg={user.msg} /> : null}
+        <Message />
         <Container>
           <BgDivRGBA style={{ padding: '5%' }}>
             <Typography variant="h4" gutterBottom>

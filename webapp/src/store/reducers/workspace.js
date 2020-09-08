@@ -1,6 +1,7 @@
 import {
   CREATE_TASK_REQUEST,
   DELETE_TASK_REQUEST,
+  ARCHIVE_TASK_REQUEST,
   SEARCH_TASKS_REQUEST,
   CHANGE_STATUS_REQUEST,
   GET_WORKSPACE_INFO_SUCCESS,
@@ -17,6 +18,7 @@ export default function (state = {}, action) {
     case DELETE_TASK_REQUEST:
     case CHANGE_STATUS_REQUEST:
     case SEARCH_TASKS_REQUEST:
+    case ARCHIVE_TASK_REQUEST:
       return { ...state, pending: true };
     default:
       return state;

@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Alert } from '@material-ui/lab';
+import Message from '../Styleds/Message';
 
 const required = value => (value ? undefined : 'Required');
 
@@ -59,6 +60,7 @@ class SigninForm extends Component {
         >
           <CircularProgress color="inherit" />
         </Backdrop>
+        <Message />
         <BgDivRGBA style={{ padding: '5%' }}>
           <Typography variant="h4" gutterBottom>
             Sign In
